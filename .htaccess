@@ -1,0 +1,16 @@
+# BEGIN STEPWECHAT
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /stepwechat/
+RewriteRule ^notes home/notes.php
+RewriteRule ^index.htm index.php
+RewriteRule ^index.html index.php
+#RewriteRule ^admin(.+)? admin/notes.php
+RewriteRule ^tomorrow(.+)? home/tomorrow.php
+RewriteRule ^about(.+)? home/about.php
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+</IfModule>
+
+# END STEPWECHAT
