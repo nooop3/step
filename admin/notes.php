@@ -13,8 +13,9 @@
 						<div class="pure-button pure-button-primary" onclick="show_notes()">Confirm</div>
 				</fieldset>
 			</form>
-			<tr>
-
+			<p>
+				<strong>Notice:</strong> Downloading the picture will be completed in about one minute because the Wechat official limit.
+			</p>
 			<div id="posted-table pure-u-1">
 				<table class="pure-table pure-table-bordered">
 					<thead>

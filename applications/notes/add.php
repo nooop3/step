@@ -19,11 +19,15 @@
 			
 				$result = preg_match('/(?<=data-src=")[\s\S]*?(?=")/', $link , $img_url);
 				if ($result) {
-					$img = $img_url[0];break;
+					$img = $img_url[0];
+					$download_url = $img;break;
 				}		
 			}
+			preg_match('/(?<=mmbiz\/)[\s\S]*?(?=\/0)/' , $img , $match);
+			$filename = $match[0];
+			$img = '/stepwechat/img/' . $filename;
+ 			$note_new = $date . "|" . $url . "|" . $title . "|" . $img ;
 		}
-		$note_new = $date . "|" . $url . "|" . $title . "|" . $img ;
 	}
 	
 	$notes = array();
@@ -48,6 +52,9 @@
  	if (!empty($repeat)) {
  		echo "<tr><td>0</td><td>Error</td><td>The notes had posted! You don't need to post again!</td><tr>";
  	} else {
+
+ 		GrabImage($download_url ,  $filename);
+
  		for ($i=0; $i < count($notes) ; $i++) { 
 	 		$note = explode('|', $notes[$i]);
 	 		if ($date < $note[0]) {
@@ -70,4 +77,23 @@
  		$j = $i+1;
 		echo "<tr><td>" . $j . "</td><td>" . $note[0] . "</td><td><a class =\"pure-button pure-u-1-1\" href=" . $note[1] . ">" . $note[2] . "</a></td><tr>";
  	}
+
+ 	/** 
+	 * 通过图片的远程url，下载到本地 
+	 * @param: $url为图片远程链接 
+	 * @param: $filename为下载图片后保存的文件名 
+	 */ 
+	function GrabImage($url,$filename) {  
+	 if($url==""):return false;endif;  
+	 ob_start();  
+	 readfile($url);  
+	 $img = ob_get_contents();  
+	 ob_end_clean();  
+	 $size = strlen($img);  
+	 //"./img/"为存储目录，$filename为文件名 
+	 $fp2=@fopen("../../img/".$filename, "a");  
+	 fwrite($fp2,$img);  
+	 fclose($fp2);  
+	 return '/stepwechat/img/' . $filename;  
+	 }  
 ?>
